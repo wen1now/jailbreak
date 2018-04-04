@@ -12,17 +12,24 @@ drawMenu = function(){
 
 drawlevelpack = function(index){
 	main.innerHTML = '';
-	pack_index = index;
+	checkunlocks();
+	pack_index = parseInt(index);
 	for (var i = 0; i < levelpacks['pack'+index].length; i++){
-		//if (levelpacks['pack'+index][i].vis){
-			main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton levelbutton">'+(i+1)+'</div>';
-		//}
+		if (levelpacks['pack'+index][i].vis){
+			if (levelpacks['pack'+index][i].completed){
+				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton levelbutton">'+(i+1)+'</div>';
+			} else {
+				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton unfinishedlevelbutton">'+(i+1)+'</div>';				
+			}
+		} else {
+			main.innerHTML += '<div class="choicebutton lock"><img src="lock.png" id="lock" width = "30px" height = "40px" margin="0px"></div>'
+		}
 	}
 }
 
 drawlevel_ = function(index){
-	level_index = index;
-	loadlevel(levelpacks['pack'+pack_index][level_index]);
+	level_index = parseInt(index);
+	loadlevel(levelpacks['pack'+pack_index][level_index].level);
 }
 
 class Entity {
@@ -179,6 +186,15 @@ function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 		if (level[player.x][player.y][i].type=='finish'){
 			gameover = true;
 			win = true;
+			if (!levelpacks['pack'+pack_index][level_index].completed){
+				points += levelpacks['pack'+pack_index][level_index].onwin;
+			}
+			levelpacks['pack'+pack_index][level_index].completed = true;
+			save();
+			var canvas = document.getElementById('canvas');
+			var c = canvas.getContext('2d');
+			c.font = "30px Courier";
+			c.fillText("You win!",10,10);
 		}
 	}
 }
@@ -249,17 +265,21 @@ function checkKey(e){
 }
 
 levelpacks = new Object();
-levelpacks.pack1 = [
+levelpacks.pack1 = [{
+	level:
 `#######
  #@....-=
  #....X#
  #.....#
  ##...##
  #######
-`
-]	
+`,
+	unlock: 0,
+	onwin: 1}
+]
 
-levelpacks.pack2 = [
+levelpacks.pack2 = [{
+	level:
 `######
  #@...-=
  #...X#
@@ -267,6 +287,10 @@ levelpacks.pack2 = [
  #....#
  ######
 `,
+	unlock: 1,
+	onwin: 1
+},{
+	level:
 `########
  #.....X#
  #.....X#
@@ -275,6 +299,10 @@ levelpacks.pack2 = [
  ########
  ########
  `,
+	unlock: 0,
+	onwin: 1
+},{
+	level:
 `############
  #......XXXX-=
  #.....######
@@ -282,8 +310,42 @@ levelpacks.pack2 = [
  #.....######
  #@....######
  ############
-`
+`,
+	unlock: 5,
+	onwin: 1
+}
 ]
+
+save = function(){
+	//it *should* save the game here at some point
+	//stuff to save: which levels have been completed, player's current point number
+}
+
+load = function(){
+	//load the game too, that seems necessary
+}
+
+setup = function(){
+	for (var i = 0; i < levelpacknum; i++) {
+		for (var j = 0; j < levelpacks['pack'+i].length; j++){
+			levelpacks['pack'+i][j].completed = false;
+			levelpacks['pack'+i][j].vis = false;
+			if (levelpacks['pack'+i][j].onwin === undefined){levelpacks['pack'+i][j].onwin = 1}
+		}
+	}
+}
+
+points = 0;
+
+checkunlocks = function(){
+	for (var i = 0; i < levelpacknum; i++) {
+		for (var j = 0; j < levelpacks['pack'+(i+1)].length; j++){
+			if (points >= levelpacks['pack'+(i+1)][j].unlock){
+				levelpacks['pack'+(i+1)][j].vis = true;
+			}
+		}
+	}
+}
 
 
 drawMenu()

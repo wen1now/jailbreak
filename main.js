@@ -1,33 +1,45 @@
 main = document.getElementById('game');
 levelpacknum = 2;
+playing = false;
+
+document.getElementById("tooltip").style.visibility = "hidden";
 
 drawMenu = function(){
 	main.innerHTML = '';
+	playing = false;
 	for (var i = 0; i < levelpacknum; i++) {
 		//if (levelpacks['pack'+i].vis){
-		main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton">'+(i+1)+'</div>';
+		main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'">'+(i+1)+'</div>';
 		//}
 	}
 }
 
+pack_index = undefined;	
 drawlevelpack = function(index){
+	hidetooltip();
+	pack_index = parseInt(index);
+	drawlevelpack_real();
+}
+
+drawlevelpack_real = function(){
+	var index = pack_index;
 	main.innerHTML = '';
 	checkunlocks();
-	pack_index = parseInt(index);
 	for (var i = 0; i < levelpacks['pack'+index].length; i++){
-		if (levelpacks['pack'+index][i].vis){
+		if (levelpacks['pack'+index][i].vis||levelpacks['pack'+index][i].completed){
 			if (levelpacks['pack'+index][i].completed){
 				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton levelbutton">'+(i+1)+'</div>';
 			} else {
-				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton unfinishedlevelbutton">'+(i+1)+'</div>';				
+				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton unfinishedlevelbutton" onmouseenter="hoveringlevelpoints('+i+')" onmouseleave="hidetooltip()" id="level'+i+'">'+(i+1)+'</div>';				
 			}
 		} else {
-			main.innerHTML += '<div class="choicebutton lock"><img src="lock.png" id="lock" width = "30px" height = "40px" margin="0px"></div>'
+			main.innerHTML += '<div class="choicebutton lock" onmouseenter="hoveringlevel('+i+')" onmouseleave="hidetooltip()" id="level'+i+'"><img src="lock.png" width = "35px" height = "40px" margin="0px"></div>';
 		}
 	}
 }
 
 drawlevel_ = function(index){
+	hidetooltip();
 	level_index = parseInt(index);
 	loadlevel(levelpacks['pack'+pack_index][level_index].level);
 }
@@ -60,7 +72,7 @@ class Entity {
 							}
 						}
 					}
-				}
+				} else {sum++}
 			}
 			if (this.dirs.every(function(x){return (x!=null)})){
 				loop = false;
@@ -87,14 +99,15 @@ loadlevel = function(string){
 	walllist = [];
 	finishlist = [];
 	leveltemplate = [];
-	for (var i = 0; i<x.length; i++){
+	var i = 0;
+	for (var i_ = 0; i_<x.length; i_++){
 		level.push([]);
 		leveltemplate.push([]);
-		var j=0;
-		for (var j_ = 0; j_<x[i].length; j_++){
+		var j = 0;
+		for (var j_ = 0; j_<x[i_].length; j_++){
 			level[i].push([]);
 			leveltemplate[i].push(0);
-			t=x[i][j_];
+			t=x[i_][j_];
 			if (t=='X'){
 				var entity = new Entity(i,j,'#000',false,'enemy',true);
 				entity.chase = 'black';
@@ -123,8 +136,11 @@ loadlevel = function(string){
 			}
 			j++;
 		}
+		if (level[i].length==0){level.pop()}
+		else {i++}
 	}
-	drawlevel(50)
+	playing = true;
+	drawlevel(50);
 }
 
 drawlevel = function(size /*size is the size each square*/){
@@ -166,6 +182,7 @@ drawlevel = function(size /*size is the size each square*/){
 		c.fillRect(e.y*size,e.x*size,size,size);
 	}
 	c.drawImage(document.getElementById("player"),player.y*size,player.x*size,size,size);
+
 }
 
 function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
@@ -186,17 +203,21 @@ function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 		if (level[player.x][player.y][i].type=='finish'){
 			gameover = true;
 			win = true;
+			playing = false;
 			if (!levelpacks['pack'+pack_index][level_index].completed){
 				points += levelpacks['pack'+pack_index][level_index].onwin;
 			}
 			levelpacks['pack'+pack_index][level_index].completed = true;
 			save();
-			var canvas = document.getElementById('canvas');
-			var c = canvas.getContext('2d');
-			c.font = "30px Courier";
-			c.fillText("You win!",10,10);
+			setTimeout(nextlevel,500)
 		}
 	}
+}
+
+nextlevel = function (){
+	if (level_index+1<levelpacks['pack'+pack_index].length){
+		drawlevel_(level_index+1)
+	} else {drawMenu()}
 }
 
 d=[[-1,0],[0,1],[1,0],[0,-1]];
@@ -246,87 +267,101 @@ document.onkeydown = checkKey;
 
 function checkKey(e){
     e = e || window.event;
-    if (e.keyCode == '37' || e.keyCode == '65') {
-        // left  arrow
-        move(player.x,player.y-1,3);
-    } else if (e.keyCode == '38' || e.keyCode == '87') {
-        // up    arrow
-        move(player.x-1,player.y,0);
-    } else if (e.keyCode == '39' || e.keyCode == '68') {
-    	// right arrow 
-        move(player.x,player.y+1,1);
-    } else if (e.keyCode == '40' || e.keyCode == '83') {
-    	// down  arrow
-        move(player.x+1,player.y,2);
-    } else if (e.keyCode == '82') {
-    	// 'r' key
-    	loadlevel(lastattempted);
-    }
+    if (playing){
+	    if (e.keyCode == '37' || e.keyCode == '65') {
+	        // left  arrow
+	        move(player.x,player.y-1,3);
+	    } else if (e.keyCode == '38' || e.keyCode == '87') {
+	        // up    arrow
+	        move(player.x-1,player.y,0);
+	    } else if (e.keyCode == '39' || e.keyCode == '68') {
+	    	// right arrow 
+	        move(player.x,player.y+1,1);
+	    } else if (e.keyCode == '40' || e.keyCode == '83') {
+	    	// down  arrow
+	        move(player.x+1,player.y,2);
+	    } else if (e.keyCode == '82') {
+	    	// 'r' key
+	    	loadlevel(lastattempted);
+	    }
+	}
 }
 
-levelpacks = new Object();
-levelpacks.pack1 = [{
-	level:
-`#######
- #@....-=
- #....X#
- #.....#
- ##...##
- #######
-`,
-	unlock: 0,
-	onwin: 1}
-]
-
-levelpacks.pack2 = [{
-	level:
-`######
- #@...-=
- #...X#
- #..X.#
- #....#
- ######
-`,
-	unlock: 1,
-	onwin: 1
-},{
-	level:
-`########
- #.....X#
- #.....X#
- #.....X#
- #@....X-=
- ########
- ########
- `,
-	unlock: 0,
-	onwin: 1
-},{
-	level:
-`############
- #......XXXX-=
- #.....######
- #.....######
- #.....######
- #@....######
- ############
-`,
-	unlock: 5,
-	onwin: 1
+hoveringlevel = function(index){
+	var a = document.getElementById('level'+index);
+	var t = document.getElementById('tooltip');
+	var s = a.getBoundingClientRect();
+	t.style.top = s.top+'px';
+	t.style.left = s.left + 70+'px';
+	t.innerHTML = "Unlock at "+levelpacks['pack'+pack_index][index].unlock+" point(s)";
+	t.style.visibility = "visible";
 }
-]
+
+hoveringlevelpoints = function(index){
+	var a = document.getElementById('level'+index);
+	var t = document.getElementById('tooltip');
+	var s = a.getBoundingClientRect();
+	t.style.top = s.top+'px';
+	t.style.left = s.left + 70+'px';
+	t.innerHTML = "Complete for "+levelpacks['pack'+pack_index][index].onwin+" point(s)";
+	t.style.visibility = "visible";	
+}
+
+hoveringlevelpack = function(index){
+	var a = document.getElementById('levelpack'+index);
+	var t = document.getElementById('tooltip');
+	var s = a.getBoundingClientRect();
+	t.style.top = s.top+'px';
+	t.style.left = s.left + 70+'px';
+	var l = 0;
+	for (var i in levelpacks['pack'+(index+1)]){
+		if (levelpacks['pack'+(index+1)][i].completed){
+			l++;
+		}
+	}
+	t.innerHTML = "Completed: "+l+'/'+levelpacks['pack'+(index+1)].length;
+	t.style.visibility = "visible";
+}
+
+hidetooltip = function(){
+	document.getElementById('tooltip').style.visibility = "hidden";
+}
+
+points = 0;
 
 save = function(){
 	//it *should* save the game here at some point
 	//stuff to save: which levels have been completed, player's current point number
+	var levels = []
+	for (var i = 1; i <= levelpacknum; i++) {
+		for (var j = 0; j < levelpacks['pack'+i].length; j++){
+			if (levelpacks['pack'+i][j].completed){levels.push(levelpacks['pack'+i][j].id)}
+		}
+	}
+    localStorage.setItem("jailbreak_save", JSON.stringify(levels));
+}
+
+delsave = function(){
+    localStorage.removeItem("jailbreak_save");
 }
 
 load = function(){
 	//load the game too, that seems necessary
+    if (localStorage.getItem("jailbreak_save")){
+        var levels = JSON.parse(localStorage.getItem("jailbreak_save"));
+		for (var i = 1; i <= levelpacknum; i++) {
+			for (var j = 0; j < levelpacks['pack'+i].length; j++){
+				if (levels.includes(levelpacks['pack'+i][j].id)){
+					levelpacks['pack'+i][j].completed = true;
+					points += levelpacks['pack'+i][j].onwin;
+				}
+			}
+		}
+    }
 }
 
 setup = function(){
-	for (var i = 0; i < levelpacknum; i++) {
+	for (var i = 1; i <= levelpacknum; i++) {
 		for (var j = 0; j < levelpacks['pack'+i].length; j++){
 			levelpacks['pack'+i][j].completed = false;
 			levelpacks['pack'+i][j].vis = false;
@@ -334,8 +369,6 @@ setup = function(){
 		}
 	}
 }
-
-points = 0;
 
 checkunlocks = function(){
 	for (var i = 0; i < levelpacknum; i++) {
@@ -346,6 +379,133 @@ checkunlocks = function(){
 		}
 	}
 }
+
+levelpacks = new Object();
+//theme: no special rule
+levelpacks.pack1 = [{
+	id: '000',
+	unlock: 0,
+	onwin: 1,
+	level:
+`
+#######
+#@....-=
+#....X#
+#.....#
+##...##
+#######
+`
+},{
+	id: 'somelevel',
+	unlock: 1,
+	onwin: 1,
+	level:
+`
+#######
+#.....#
+#...#.#
+#....@#
+###.###
+###X###
+###-###
+`
+},{
+	id: '9723597293#uniqueidamirite',
+	unlock: 2,
+	onwin: 3,
+	level:
+`
+#########
+#...#..@#
+#.#...#.#
+#...#...#
+#X#...#.#
+-X..#X..#
+#########
+`
+}
+]
+
+//theme: 'normal' levels
+levelpacks.pack2 = [{
+	id: 'dash',
+	unlock: 5,
+	onwin: 2,
+	level:
+`
+######
+#@...-=
+#...X#
+#..X.#
+#....#
+######
+`
+},{
+	id: '001',
+	unlock: 7,
+	onwin: 3,
+	level:
+`
+########
+#.....X#
+#.....X#
+#.....X#
+#@....X-=
+########
+########
+`
+},{
+	id: '002',
+	unlock: 10,
+	onwin: 5,
+	level:
+`
+############
+#......XXXX-=
+#.....######
+#.....######
+#.....######
+#@....######
+############
+`
+},{
+	id: 'nottoobad',
+	unlock: 10,
+	onwin: 5,
+	level:
+`
+#########
+#@......-
+#.#.#.#X#
+#.X...#X#
+#.#.#.#X#
+#.X.....#
+#.#.#.#.#
+#.X.....#
+#########
+`
+},{
+	id: 'whatthehellisthis',
+	unlock: 10,
+	onwin: 5,
+	level:
+`
+#########
+#@......#
+#.......#
+#......X#
+#.XXX..X#
+####-####
+`
+}]
+
+//theme: large levels
+levelpacks.pack3 = [{
+}]
+
+setup();
+load();
+save();
 
 
 drawMenu()

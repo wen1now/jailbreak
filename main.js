@@ -1,21 +1,29 @@
 main = document.getElementById('game');
-levelpacknum = 2;
+levelpacknum = 3;
 playing = false;
 
 document.getElementById("tooltip").style.visibility = "hidden";
 
 drawMenu = function(){
 	main.innerHTML = '';
+	document.getElementById("information").innerHTML = "";
 	playing = false;
 	for (var i = 0; i < levelpacknum; i++) {
 		//if (levelpacks['pack'+i].vis){
 		main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'">'+(i+1)+'</div>';
 		//}
 	}
+	drawScore();
 }
+
+drawScore = function(){
+	document.getElementById("score").innerHTML = "Keys: "+points;
+}
+
 
 pack_index = undefined;	
 drawlevelpack = function(index){
+	document.getElementById("information").innerHTML = "Act "+index;
 	hidetooltip();
 	pack_index = parseInt(index);
 	drawlevelpack_real();
@@ -42,6 +50,7 @@ drawlevel_ = function(index){
 	hidetooltip();
 	level_index = parseInt(index);
 	loadlevel(levelpacks['pack'+pack_index][level_index].level);
+	document.getElementById("information").innerHTML = "Act "+pack_index+": level "+(index+1);
 }
 
 class Entity {
@@ -209,7 +218,8 @@ function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 			}
 			levelpacks['pack'+pack_index][level_index].completed = true;
 			save();
-			setTimeout(nextlevel,500)
+			drawScore();
+			setTimeout(nextlevel,500);
 		}
 	}
 }
@@ -293,7 +303,7 @@ hoveringlevel = function(index){
 	var s = a.getBoundingClientRect();
 	t.style.top = s.top+'px';
 	t.style.left = s.left + 70+'px';
-	t.innerHTML = "Unlock at "+levelpacks['pack'+pack_index][index].unlock+" point(s)";
+	t.innerHTML = "Unlock at "+levelpacks['pack'+pack_index][index].unlock+" key(s)";
 	t.style.visibility = "visible";
 }
 
@@ -303,7 +313,7 @@ hoveringlevelpoints = function(index){
 	var s = a.getBoundingClientRect();
 	t.style.top = s.top+'px';
 	t.style.left = s.left + 70+'px';
-	t.innerHTML = "Complete for "+levelpacks['pack'+pack_index][index].onwin+" point(s)";
+	t.innerHTML = "Complete for "+levelpacks['pack'+pack_index][index].onwin+" key(s)";
 	t.style.visibility = "visible";	
 }
 
@@ -381,7 +391,7 @@ checkunlocks = function(){
 }
 
 levelpacks = new Object();
-//theme: no special rule
+//theme: no special rule i.e beginner levels
 levelpacks.pack1 = [{
 	id: '000',
 	unlock: 0,
@@ -412,7 +422,7 @@ levelpacks.pack1 = [{
 },{
 	id: '9723597293#uniqueidamirite',
 	unlock: 2,
-	onwin: 3,
+	onwin: 1,
 	level:
 `
 #########
@@ -426,10 +436,10 @@ levelpacks.pack1 = [{
 }
 ]
 
-//theme: 'normal' levels
+//'normal' levels
 levelpacks.pack2 = [{
 	id: 'dash',
-	unlock: 5,
+	unlock: 3,
 	onwin: 2,
 	level:
 `
@@ -442,8 +452,8 @@ levelpacks.pack2 = [{
 `
 },{
 	id: '001',
-	unlock: 7,
-	onwin: 3,
+	unlock: 5,
+	onwin: 2,
 	level:
 `
 ########
@@ -452,26 +462,11 @@ levelpacks.pack2 = [{
 #.....X#
 #@....X-=
 ########
-########
-`
-},{
-	id: '002',
-	unlock: 10,
-	onwin: 5,
-	level:
-`
-############
-#......XXXX-=
-#.....######
-#.....######
-#.....######
-#@....######
-############
 `
 },{
 	id: 'nottoobad',
-	unlock: 10,
-	onwin: 5,
+	unlock: 7,
+	onwin: 3,
 	level:
 `
 #########
@@ -485,9 +480,60 @@ levelpacks.pack2 = [{
 #########
 `
 },{
-	id: 'whatthehellisthis',
+	id: '002',
 	unlock: 10,
-	onwin: 5,
+	onwin: 3,
+	level:
+`
+############
+#......XXXX-=
+#.....######
+#.....######
+#.....######
+#@....######
+############
+`
+}]
+
+
+
+//Will hu levels
+levelpacks.pack3 = [{
+	id: "Too Many Cooks I",
+	unlock: 5,
+	onwin: 2,
+	level:
+`
+#########
+#...@..X#
+#..X.X.X#
+#X......#
+#.....X.#
+#.X.....#
+#.......#
+#...X...#
+####-####
+`
+},{
+	id: "Too Many Cooks II",
+	unlock: 7,
+	onwin: 2,
+	level:
+`
+#########
+#...@..X-
+#..X.X.X#
+#X......#
+#.....X.#
+#.X.....#
+#.......#
+#...X...#
+#########
+`
+},{
+	id: 'whatthehellisthis',
+	unlock: 9,
+	onwin: 2,
 	level:
 `
 #########
@@ -497,10 +543,6 @@ levelpacks.pack2 = [{
 #.XXX..X#
 ####-####
 `
-}]
-
-//theme: large levels
-levelpacks.pack3 = [{
 }]
 
 setup();

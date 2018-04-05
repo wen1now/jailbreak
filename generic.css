@@ -50,6 +50,17 @@ body {
     background-color: #777;
 }
 
+#status {
+    width: 250px;
+}
+
+#information {
+    font-size: 20px;
+    height: 20px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
 #canvas {
     margin-left: 5px;
     margin-top: 10px;

@@ -111,6 +111,7 @@ loadlevel = function(string){
 	gameover = false;
 	win = false;
 	lastattempted = string;
+	undolist = [];
 	level = [];
 	enemylist = [];
 	walllist = [];
@@ -222,6 +223,38 @@ sizedecrease = function(){
 	drawlevel();
 }
 
+stringlevel = function(){
+	string = ''
+	for (var i in level){
+		for (var j in level[i]){
+			space=true;
+			for (var k in level[i][j]){
+				if (level[i][j][k].type == 'enemy'){string+='X';space=false}
+				if (level[i][j][k].type == 'player'){string+='@';space=false}
+				if (level[i][j][k].color == '#666'){string+='#';space=false}
+				if (level[i][j][k].type == 'finish'){string+='-';space=false}
+				if (level[i][j][k].type == 'box'){string+='b';space=false}
+			}
+			if (space){string+='.'}
+		}
+		string+='\n'
+	}
+	return string;
+}
+
+undo = function(){
+	if (undolist.length>0){
+		var temp = lastattempted;
+		var temp_ = undolist.slice();
+		loadlevel(undolist.pop());
+		undolist = temp_;
+		undolist.pop()
+		lastattempted = temp;
+		drawlevel(50);
+	}
+}
+
+undolist = []
 function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 	var canmove = true;
 	var pushing = [];
@@ -239,6 +272,8 @@ function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 		}
 	}
 	if (canmove){
+		//FIX THIS LATER!
+		undolist.push(stringlevel());
 		changelocation(player,x,y);
 		for (var k in pushing){
 			changelocation(pushing[k],x+d[dir][0],y+d[dir][1])
@@ -335,6 +370,9 @@ function checkKey(e){
 	    } else if (e.keyCode == '82') {
 	    	// 'r' key
 	    	loadlevel(lastattempted);
+	    } else if (e.keyCode == '85' || e.keyCode == '90') {
+	    	// 'r' key
+	    	undo();
 	    }
 	}
 }

@@ -676,8 +676,8 @@ levelpacks.pack3.unlock = 5;
 
 levelpacks.pack4 = [{
 	id: 'box1',
-	unlock: 15,
-	onwin: 3,
+	unlock: 20,
+	onwin: 2,
 	level:
 `
 ########

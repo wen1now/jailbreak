@@ -52,6 +52,24 @@ body {
 
 #status {
     width: 250px;
+    height: 32px;
+}
+
+.size {
+    float: right;
+    border: 2px black solid;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 5px;
+    width: 27px;
+    height: 27px;
+    line-height: 27px;
+    text-align: center;
+}
+
+.size:active {
+    background-color:#888;
 }
 
 #information {

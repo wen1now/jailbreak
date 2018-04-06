@@ -7,6 +7,7 @@ document.getElementById("tooltip").style.visibility = "hidden";
 drawMenu = function(){
 	main.innerHTML = '';
 	document.getElementById("information").innerHTML = "";
+	document.
 	playing = false;
 	for (var i = 0; i < levelpacknum; i++) {
 		//if (levelpacks['pack'+i].vis){
@@ -98,7 +99,7 @@ istrue = function(boolean){
 }
 
 loadlevel = function(string){
-    main.innerHTML='<canvas id="canvas" width="1000" height="700"></canvas>';
+    main.innerHTML='<canvas id="canvas" width="1200px" height="1200px"></canvas>';
 	x=string.split('\n');
 	gameover = false;
 	win = false;
@@ -152,7 +153,8 @@ loadlevel = function(string){
 	drawlevel(50);
 }
 
-drawlevel = function(size /*size is the size each square*/){
+size = 50;
+drawlevel = function( /*size is the size each square*/){
 	/*
 	todraw = [];
 	for (var i = levelheight - 1; i >= 0; i--) {
@@ -191,7 +193,16 @@ drawlevel = function(size /*size is the size each square*/){
 		c.fillRect(e.y*size,e.x*size,size,size);
 	}
 	c.drawImage(document.getElementById("player"),player.y*size,player.x*size,size,size);
+}
 
+sizeincrease = function(){
+	size *= 1.1;
+	drawlevel();
+}
+
+sizedecrease = function(){
+	size /= 1.1;
+	drawlevel();
 }
 
 function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
@@ -225,7 +236,8 @@ function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 }
 
 nextlevel = function (){
-	if (level_index+1<levelpacks['pack'+pack_index].length){
+	if (level_index+1<levelpacks['pack'+pack_index].length &&
+		levelpacks['pack'+pack_index][level_index+1].unlock<=points){
 		drawlevel_(level_index+1)
 	} else {drawMenu()}
 }
@@ -440,7 +452,7 @@ levelpacks.pack1 = [{
 levelpacks.pack2 = [{
 	id: 'dash',
 	unlock: 3,
-	onwin: 2,
+	onwin: 1,
 	level:
 `
 ######
@@ -449,6 +461,19 @@ levelpacks.pack2 = [{
 #..X.#
 #....#
 ######
+`
+},{
+    id: 'a new possibility',
+	unlock: 4,
+	onwin: 1,
+    level:
+`
+########
+#.....X-
+#.#....#
+#@....X#
+#..X...#
+########
 `
 },{
 	id: '001',
@@ -482,7 +507,7 @@ levelpacks.pack2 = [{
 },{
 	id: '002',
 	unlock: 10,
-	onwin: 3,
+	onwin: 2,
 	level:
 `
 ############
@@ -492,6 +517,21 @@ levelpacks.pack2 = [{
 #.....######
 #@....######
 ############
+`
+},{
+	id: 'Ihopethisisunique',
+	unlock: 12,
+	onwin: 1,
+	level:
+`
+##########
+#.....xxx-
+#....#xxx#
+#....#...#
+#....#...#
+#........#
+#p.......#
+##########
 `
 }]
 
@@ -516,8 +556,8 @@ levelpacks.pack3 = [{
 `
 },{
 	id: "Too Many Cooks II",
-	unlock: 7,
-	onwin: 2,
+	unlock: 9,
+	onwin: 3,
 	level:
 `
 #########
@@ -532,8 +572,8 @@ levelpacks.pack3 = [{
 `
 },{
 	id: 'whatthehellisthis',
-	unlock: 9,
-	onwin: 2,
+	unlock: 12,
+	onwin: 3,
 	level:
 `
 #########

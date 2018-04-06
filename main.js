@@ -116,6 +116,7 @@ loadlevel = function(string){
 	walllist = [];
 	finishlist = [];
 	leveltemplate = [];
+	boxlist = [];
 	var i = 0;
 	for (var i_ = 0; i_<x.length; i_++){
 		level.push([]);
@@ -135,7 +136,7 @@ loadlevel = function(string){
 				level[i][j].push(entity);
 				walllist.push(entity);
 			} else if (t=='-'){
-				var entity = new Entity(i,j,'green',true,'finish',false);
+				var entity = new Entity(i,j,'green',false,'finish',false);
 				level[i][j].push(entity);
 				finishlist.push(entity);
 			} else if (t=='='){
@@ -146,6 +147,10 @@ loadlevel = function(string){
 			} else if (t=='@'){
 				player = new Entity(i,j,'black',false,'player',true);
 				level[i][j].push(player);
+			} else if (t=='b'){
+				var entity= new Entity(i,j,'#a65',true,'box',true);
+				level[i][j].push(entity);
+				boxlist.push(entity);
 			} else if (t==' '){
 				level[i].pop();
 				leveltemplate[i].pop();
@@ -199,6 +204,11 @@ drawlevel = function( /*size is the size each square*/){
 		c.fillStyle = e.color;
 		c.fillRect(e.y*size,e.x*size,size,size);
 	}
+	for (var i in boxlist){
+		e = boxlist[i];
+		c.fillStyle = e.color;
+		c.fillRect((e.y+0.1)*size,(e.x+0.1)*size,size*0.8,size*0.8);
+	}
 	c.drawImage(document.getElementById("player"),player.y*size,player.x*size,size,size);
 }
 
@@ -214,12 +224,25 @@ sizedecrease = function(){
 
 function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 	var canmove = true;
+	var pushing = [];
 	if (gameover){canmove = false}
 	for (var k in level[x][y]){//need to fix this with boxes
-		if (!level[x][y][k].pushable){canmove = false}
+		if (level[x][y][k].solid){
+			if (level[x][y][k].pushable){
+				pushing.push(level[x][y][k]);//.push() geddit? hahahaa
+				for (var k_ in level[x+d[dir][0]][y+d[dir][1]]){
+					if (level[x+d[dir][0]][y+d[dir][1]][k_].solid){
+						canmove = false;
+					}
+				}
+			} else {canmove = false}
+		}
 	}
 	if (canmove){
 		changelocation(player,x,y);
+		for (var k in pushing){
+			changelocation(pushing[k],x+d[dir][0],y+d[dir][1])
+		}
 		moveEnemies();
 		drawlevel();
 	}
@@ -648,10 +671,25 @@ levelpacks.pack3 = [{
 }]
 
 //next world at 20 things
-/*
-levelpacks.pack4 = []
+
+levelpacks.pack4 = [{
+	id: 'box1',
+	unlock: 15,
+	onwin: 3,
+	level:
+`
+########
+#X....X-
+###.@###
+#....bX#
+#.#..#.#
+#......#
+####...#
+########
+`
+}]
 levelpacks.pack4.unlock = 20;
-*/
+
 
 levelpacks.setupunlocks();
 setup();

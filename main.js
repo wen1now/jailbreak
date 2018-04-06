@@ -7,7 +7,8 @@ document.getElementById("tooltip").style.visibility = "hidden";
 drawMenu = function(){
 	main.innerHTML = '';
 	document.getElementById("information").innerHTML = "";
-	document.
+	document.getElementById("sizeincrease").style.visibility = "hidden";
+	document.getElementById("sizedecrease").style.visibility = "hidden";
 	playing = false;
 	for (var i = 0; i < levelpacknum; i++) {
 		//if (levelpacks['pack'+i].vis){
@@ -52,6 +53,8 @@ drawlevel_ = function(index){
 	level_index = parseInt(index);
 	loadlevel(levelpacks['pack'+pack_index][level_index].level);
 	document.getElementById("information").innerHTML = "Act "+pack_index+": level "+(index+1);
+	document.getElementById("sizeincrease").style.visibility = "visible";
+	document.getElementById("sizedecrease").style.visibility = "visible";
 }
 
 class Entity {
@@ -525,12 +528,12 @@ levelpacks.pack2 = [{
 	level:
 `
 ##########
-#.....xxx-
-#....#xxx#
+#.....XXX-
+#....#XXX#
 #....#...#
 #....#...#
 #........#
-#p.......#
+#@.......#
 ##########
 `
 }]
@@ -571,7 +574,19 @@ levelpacks.pack3 = [{
 #########
 `
 },{
-	id: 'whatthehellisthis',
+	id: 'veryeasylevel',
+	unlock: 10,
+	onwin: 1,
+	level:
+`
+#-#######
+#XX.....#
+#@......#
+#XX.....#
+#########
+`
+},{
+	id: 'lounge',
 	unlock: 12,
 	onwin: 3,
 	level:
@@ -583,8 +598,22 @@ levelpacks.pack3 = [{
 #.XXX..X#
 ####-####
 `
+},{
+	id: 'lounge2',
+	unlock: 17,
+	onwin: 3,
+	level:
+`
+#########
+###X##X##
+###.##.##
+#@......#
+#.......#
+#......X#
+#.XXX..X#
+####-####
+`
 }]
-
 setup();
 load();
 save();

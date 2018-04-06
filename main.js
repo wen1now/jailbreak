@@ -365,7 +365,7 @@ hoveringlevelpacklock = function(index){
 	var s = a.getBoundingClientRect();
 	t.style.top = s.top+'px';
 	t.style.left = s.left + 70+'px';
-	t.innerHTML = "Unlock at "+points+"/"+levelpacks['pack'+(index+1)].unlock+	" keys";
+	t.innerHTML = "Unlock at "+levelpacks['pack'+(index+1)].unlock+	" keys";
 	t.style.visibility = "visible";
 }
 

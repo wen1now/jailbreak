@@ -592,6 +592,7 @@ levelpacks.pack2 = [{
 ##########
 `
 }]
+levelpacks.pack2.unlock = 3;
 
 
 
@@ -669,6 +670,7 @@ levelpacks.pack3 = [{
 ####-####
 `
 }]
+levelpacks.pack3.unlock = 5;
 
 //next world at 20 things
 

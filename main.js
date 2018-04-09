@@ -771,27 +771,27 @@ levelpacks.pack4 = [{
 #######
 `
 },{
-	id: 'box3',
+	id: 'box3_',
 	unlock: 24,
 	onwin: 2,
 	level:
 `
-#########
-#X.X.X.X-
-#.#.#.#.#
-#.......#
-#.#.#.#.#
-#.......#
-#b#b#b#b#
-#......@#
-#########
+##########
+#X.X.X.X.-
+#.#.#.#.##
+#.......##
+#.#.#.#.X#
+#.......##
+#b#b#b#b##
+#......@##
+##########
 `
 }]
 levelpacks.pack4.unlock = 20;
 
 levelpacks.pack5 = [{
 	id: '002_',
-	unlock: 24,
+	unlock: 27,
 	onwin: 1,
 	level:
 `
@@ -805,7 +805,7 @@ levelpacks.pack5 = [{
 `
 },{
     id: 'levelben_',
-	unlock: 26,
+	unlock: 32,
 	onwin: 2,
     level:
 `
@@ -816,7 +816,22 @@ levelpacks.pack5 = [{
 #.#...###
 #......X#
 #########
-
+`
+},{
+    id: 'DedicatedToWensSecondBrotherWhoeverHeIs',
+	unlock: 36,
+	onwin: 2,
+    level:
+`
+#########
+#@......#
+#.#.#.#.#
+#.......#
+#.#.#.#X#
+#.....#X#
+#.#.###X#
+#....XXX-
+#########
 `
 }]
 levelpacks.pack5.unlock = 24;

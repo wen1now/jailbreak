@@ -1,5 +1,5 @@
 main = document.getElementById('game');
-levelpacknum = 4;
+levelpacknum = 5;
 playing = false;
 
 document.getElementById("tooltip").style.visibility = "hidden";
@@ -166,7 +166,7 @@ loadlevel = function(string){
 	drawlevel(50);
 }
 
-size = 50;
+size = 40;
 drawlevel = function( /*size is the size each square*/){
 	/*
 	todraw = [];
@@ -182,7 +182,7 @@ drawlevel = function( /*size is the size each square*/){
 	}
 	var canvas = document.getElementById('canvas');
 	var c = canvas.getContext('2d');
-	c.clearRect(0, 0, 1000, 1000);
+	c.clearRect(0, 0, 1200, 1200);
 	c.lineWidth = size/10;
 	c.lineCap = "round";
 	c.beginPath();
@@ -548,7 +548,7 @@ levelpacks.pack1 = [{
 levelpacks.pack2 = [{
 	id: 'dash',
 	unlock: 3,
-	onwin: 1,
+	onwin: 2,
 	level:
 `
 ######
@@ -574,7 +574,7 @@ levelpacks.pack2 = [{
 },{
 	id: '001',
 	unlock: 5,
-	onwin: 2,
+	onwin: 3,
 	level:
 `
 ########
@@ -586,8 +586,8 @@ levelpacks.pack2 = [{
 `
 },{
 	id: 'nottoobad',
-	unlock: 7,
-	onwin: 3,
+	unlock: 8,
+	onwin: 4,
 	level:
 `
 #########
@@ -602,8 +602,8 @@ levelpacks.pack2 = [{
 `
 },{
 	id: '002',
-	unlock: 7,
-	onwin: 3,
+	unlock: 12,
+	onwin: 4,
 	level:
 `
 ############
@@ -616,7 +616,7 @@ levelpacks.pack2 = [{
 `
 },{
 	id: 'Ihopethisisunique',
-	unlock: 9,
+	unlock: 16,
 	onwin: 3,
 	level:
 `
@@ -628,6 +628,34 @@ levelpacks.pack2 = [{
 #........#
 #@.......#
 ##########
+`
+},{
+    id: 'levelben',
+	unlock: 16,
+	onwin: 1,
+    level:
+`
+#########
+#......X#
+#.#...#.#
+#...@..X-
+#.#...#.#
+#......X#
+#########
+`
+},{
+
+    id: 'anotherlevelwhichneedsauniqueid',
+	unlock: 16,
+	onwin: 1,
+    level:
+`
+############
+#@.........#
+#...X...X..-
+#.X...X...X#
+#..........#
+############
 `
 }]
 levelpacks.pack2.unlock = 3;
@@ -727,9 +755,71 @@ levelpacks.pack4 = [{
 ####...#
 ########
 `
+},{
+	id: 'box2',
+	unlock: 22,
+	onwin: 2,
+	level:
+`
+#######
+#X...X#
+#X...X-
+#X...X#
+#..b..#
+#..b..#
+##.@.##
+#######
+`
+},{
+	id: 'box3',
+	unlock: 24,
+	onwin: 2,
+	level:
+`
+#########
+#X.X.X.X-
+#.#.#.#.#
+#.......#
+#.#.#.#.#
+#.......#
+#b#b#b#b#
+#......@#
+#########
+`
 }]
 levelpacks.pack4.unlock = 20;
 
+levelpacks.pack5 = [{
+	id: '002_',
+	unlock: 24,
+	onwin: 1,
+	level:
+`
+###########
+#.....XXXX-
+#.....#####
+#.....#####
+#.....#####
+#@....#####
+###########
+`
+},{
+    id: 'levelben_',
+	unlock: 26,
+	onwin: 2,
+    level:
+`
+#########
+#......X#
+#.#...###
+#...@..X-
+#.#...###
+#......X#
+#########
+
+`
+}]
+levelpacks.pack5.unlock = 24;
 
 levelpacks.setupunlocks();
 setup();

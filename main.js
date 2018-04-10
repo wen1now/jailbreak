@@ -741,8 +741,24 @@ levelpacks.pack3.unlock = 5;
 //next world at 20 things
 
 levelpacks.pack4 = [{
-	id: 'box1',
+	id: 'box3-',
 	unlock: 20,
+	onwin: 2,
+	level:
+`
+####-####
+#X.X.X.X#
+#.#.#.#.#
+#.......#
+#.#.#.#.#
+#.......#
+#b#b#b#b#
+#...@...#
+#########
+`
+},{
+	id: 'box1',
+	unlock: 22,
 	onwin: 2,
 	level:
 `
@@ -757,7 +773,7 @@ levelpacks.pack4 = [{
 `
 },{
 	id: 'box2',
-	unlock: 22,
+	unlock: 24,
 	onwin: 2,
 	level:
 `
@@ -771,20 +787,32 @@ levelpacks.pack4 = [{
 #######
 `
 },{
-	id: 'box3-',
-	unlock: 24,
+	id: 'testboxer',
+	unlock: 26,
 	onwin: 2,
 	level:
 `
-####-####
-#X.X.X.X#
-#.#.#.#.#
-#.......#
-#.#.#.#.#
-#.......#
-#b#b#b#b#
-#...@...#
-#########
+#######
+#X....#
+#.....#
+#..Xb@#####
+#.....#...#
+#X........-
+########X##
+`
+},{
+	id: 'gauntlet',
+	unlock: 28,
+	onwin: 3,
+	level:
+`
+#############
+#.X.X.X.X.X.#
+#...........#-#
+#@.........b..#
+#...........###
+#..X.X.X.X.X#
+#############
 `
 }]
 levelpacks.pack4.unlock = 20;
@@ -818,9 +846,55 @@ levelpacks.pack5 = [{
 #########
 `
 },{
+	id: 'box3-_',
+	unlock: 35,
+	onwin: 3,
+	level:
+`
+###########
+####....X.-
+####.####.#
+#X.X.X.X#.#
+#.#.#.#.#.#
+#.......#.#
+#.#.#.#.#.#
+#.......#.#
+#b#b#b#b#.#
+#...@.....#
+###########
+`
+},{
+	id: 'testboxer+',
+	unlock: 40,
+	onwin: 2,
+	level:
+`
+#######
+#X....####
+#.....##X##
+#..Xb@....-
+#.....#...#
+#X....#####
+#######
+`
+},{
+	id: 'testboxer-',
+	unlock: 42,
+	onwin: 2,
+	level:
+`
+#######
+#....X#
+#.....#
+#@bX..#####
+#.....#...#
+#....X....-
+########X##
+`
+},{
     id: 'DedicatedToWensSecondBrotherWhoeverHeIs',
-	unlock: 36,
-	onwin: 4,
+	unlock: 44,
+	onwin: 6,
     level:
 `
 #########
@@ -835,6 +909,8 @@ levelpacks.pack5 = [{
 `
 }]
 levelpacks.pack5.unlock = 24;
+
+//next pack unlocks at 50 keys hehe (but I need a few more levels first)
 
 levelpacks.setupunlocks();
 setup();

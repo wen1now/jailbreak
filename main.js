@@ -912,7 +912,7 @@ levelpacks.pack5 = [{
 `
 },{
     id: 'DedicatedToWensSecondBrotherWhoeverHeIs',
-	unlock: 44,
+	unlock: 45,
 	onwin: 6,
     level:
 `

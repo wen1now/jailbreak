@@ -652,7 +652,7 @@ levelpacks.pack2 = [{
 
     id: 'anotherlevelwhichneedsauniqueid',
 	unlock: 16,
-	onwin: 1,
+	onwin: 2,
     level:
 `
 ############
@@ -661,6 +661,20 @@ levelpacks.pack2 = [{
 #.X...X...X#
 #..........#
 ############
+`
+},{
+    id:'WensCombinationLock',
+	unlock: 18,
+	onwin: 1,
+    level:
+`
+##########
+#@.......#
+#.#...X..#
+#.#.X..X.##
+#.#X.X..X.-
+#.........#
+###########
 `
 }]
 levelpacks.pack2.unlock = 3;

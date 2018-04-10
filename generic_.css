@@ -2,7 +2,6 @@ body {
     background-color: #999;
     font-family: Courier;
     font-weight: bold;
-    overflow: hidden;
 }
 
 p {
@@ -16,6 +15,7 @@ p {
 
 #maintitle {
     font-size: 100px;
+    width: 600px;
 }
 
 #thanksto {

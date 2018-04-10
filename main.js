@@ -439,6 +439,11 @@ save = function(){
 		}
 	}
     localStorage.setItem("jailbreak_save", JSON.stringify(levels));
+    var levelpack = 1;
+	for (var i = levelpacknum; i > 0; i--) {
+		if (levelpacks['pack'+i].vis){levelpack = i; i = 0}
+	}
+    localStorage.setItem("jailbreak_story", JSON.stringify(levelpack));
 }
 
 delsave = function(){
@@ -915,7 +920,7 @@ levelpacks.pack5.unlock = 24;
 levelpacks.setupunlocks();
 setup();
 load();
-save();
 
 
 drawMenu()
+save();

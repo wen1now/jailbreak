@@ -8,6 +8,10 @@ p {
     width: 600px;
 }
 
+div {
+    width: 600px;
+}
+
 .noblue {
     color: black;
     font-style: normal;

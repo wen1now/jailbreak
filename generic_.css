@@ -18,6 +18,11 @@ p {
     width: 600px;
 }
 
+.big {
+    font-size: 30px;
+    width: 1000px;
+}
+
 #thanksto {
     font-size: 20px;
     position: relative;

@@ -1,5 +1,5 @@
 main = document.getElementById('game');
-levelpacknum = 5;
+levelpacknum = 7;
 playing = false;
 
 document.getElementById("tooltip").style.visibility = "hidden";
@@ -152,6 +152,10 @@ loadlevel = function(string){
 				var entity= new Entity(i,j,'#a65',true,'box',true);
 				level[i][j].push(entity);
 				boxlist.push(entity);
+			} else if (t=='B'){
+				var entity= new Entity(i,j,'black',true,'box',true);
+				level[i][j].push(entity);
+				boxlist.push(entity);
 			} else if (t==' '){
 				level[i].pop();
 				leveltemplate[i].pop();
@@ -233,7 +237,10 @@ stringlevel = function(){
 				if (level[i][j][k].type == 'player'){string+='@';space=false}
 				if (level[i][j][k].color == '#666'){string+='#';space=false}
 				if (level[i][j][k].type == 'finish'){string+='-';space=false}
-				if (level[i][j][k].type == 'box'){string+='b';space=false}
+				if (level[i][j][k].type == 'box'){
+					if (level[i][j][k].color == 'black'){string+='B';space=false}
+					if (level[i][j][k].color == '#a65'){string+='b';space=false}
+				}
 			}
 			if (space){string+='.'}
 		}
@@ -293,6 +300,7 @@ function move(x,y,dir/*direction: 0,1,2,3 = up right down left respectively*/){
 				points += levelpacks['pack'+pack_index][level_index].onwin;
 			}
 			levelpacks['pack'+pack_index][level_index].completed = true;
+			levelpacks.checkunlocks();
 			save();
 			drawScore();
 			setTimeout(nextlevel,500);
@@ -333,7 +341,11 @@ function moveEnemies(){
 		if (enemylist[i].togo !== undefined){
 			var m = d[enemylist[i].togo];
 			if (leveltemplate[enemylist[i].x + m[0]][enemylist[i].y + m[1]] == 1){
-				changelocation(enemylist[i],enemylist[i].x + m[0],enemylist[i].y + m[1])
+				var canmove = true;
+				for (var temp in level[enemylist[i].x + m[0]][enemylist[i].y + m[1]]){
+					if (level[enemylist[i].x + m[0]][enemylist[i].y + m[1]][temp].solid && (level[enemylist[i].x + m[0]][enemylist[i].y + m[1]][temp].type != 'player')){canmove = false}
+				}
+				if (canmove){changelocation(enemylist[i],enemylist[i].x + m[0],enemylist[i].y + m[1])}
 			}
 		}
 	}
@@ -819,20 +831,6 @@ levelpacks.pack4 = [{
 #X........-
 ########X##
 `
-},{
-	id: 'gauntlet',
-	unlock: 28,
-	onwin: 3,
-	level:
-`
-#############
-#.X.X.X.X.X.#
-#...........#-#
-#@.........b..#
-#...........###
-#..X.X.X.X.X#
-#############
-`
 }]
 levelpacks.pack4.unlock = 20;
 
@@ -911,6 +909,20 @@ levelpacks.pack5 = [{
 ########X##
 `
 },{
+    id:'BrokenCombinationLock',
+	unlock: 44,
+	onwin: 4,
+    level:
+`
+##########
+#@.......#
+#.#...X..#
+#...X..X.##
+#.#X.X..X.-
+#.........#
+###########
+`
+},{
     id: 'DedicatedToWensSecondBrotherWhoeverHeIs',
 	unlock: 45,
 	onwin: 6,
@@ -927,9 +939,86 @@ levelpacks.pack5 = [{
 #########
 `
 }]
-levelpacks.pack5.unlock = 24;
+levelpacks.pack5.unlock = 27;
 
 //next pack unlocks at 50 keys hehe (but I need a few more levels first)
+//set it up so that black boxes look like they neutralise enemies
+levelpacks.pack6 = [{
+	id: 'blackbox1',
+	unlock: 50,
+	onwin: 2,
+	level:
+`
+##-##
+#..X#
+#..X#
+#.B.#
+#.@##
+#####
+`
+},{
+	id: 'blackbox2',
+	unlock: 52,
+	onwin: 2,
+	level:
+`
+#####
+#.X.-
+#.#.#
+#.@.#
+#.B.#
+#.X.#
+#.B.#
+#.b.#
+#####
+`
+}]
+levelpacks.pack6.unlock = 50;
+
+levelpacks.pack7=[{
+	id: 'gauntlet',
+	unlock: 60,
+	onwin: 3,
+	level:
+`
+#############
+#.X.X.X.X.X.####
+#..............#
+#@..........##.#
+#..............#
+#..X.X.X.X.X#-##
+#############
+`
+},{
+
+    id: 'snakes and ladders',
+	unlock: 65,
+	onwin: 2,
+    level:
+`
+####################
+#...XXX...#.....#..-
+#.....#...#..X..#..#
+#.....#......#..X..#
+#..@..#......#.....#
+####################
+`
+},{
+    id:'01101111 00101111',
+	unlock: 70,
+	onwin: 5,
+    level:
+`
+###########
+#@........#
+#....####.#
+#....XXXX.-
+#....####.#
+#.........#
+###########
+`
+}]
+levelpacks.pack7.unlock = 60;
 
 levelpacks.setupunlocks();
 setup();

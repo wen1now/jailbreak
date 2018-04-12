@@ -521,6 +521,7 @@ levelpacks.pack1 = [{
 	id: '000',
 	unlock: 0,
 	onwin: 1,
+	mini:'00',
 	level:
 `
 #######
@@ -534,6 +535,7 @@ levelpacks.pack1 = [{
 	id: 'somelevel',
 	unlock: 1,
 	onwin: 1,
+	mini:'so',
 	level:
 `
 #######
@@ -548,6 +550,7 @@ levelpacks.pack1 = [{
 	id: '9723597293#uniqueidamirite',
 	unlock: 2,
 	onwin: 1,
+	mini:'9#',
 	level:
 `
 #########
@@ -566,6 +569,7 @@ levelpacks.pack2 = [{
 	id: 'dash',
 	unlock: 3,
 	onwin: 2,
+	mini:'da',
 	level:
 `
 ######
@@ -579,6 +583,7 @@ levelpacks.pack2 = [{
     id: 'a new possibility',
 	unlock: 4,
 	onwin: 1,
+	mini:'np',
     level:
 `
 ########
@@ -592,6 +597,7 @@ levelpacks.pack2 = [{
 	id: '001',
 	unlock: 5,
 	onwin: 3,
+	mini:'01',
 	level:
 `
 ########
@@ -605,6 +611,7 @@ levelpacks.pack2 = [{
 	id: 'nottoobad',
 	unlock: 8,
 	onwin: 4,
+	mini:'nb',
 	level:
 `
 #########
@@ -621,6 +628,7 @@ levelpacks.pack2 = [{
 	id: '002',
 	unlock: 12,
 	onwin: 4,
+	mini:'02',
 	level:
 `
 ############
@@ -635,6 +643,7 @@ levelpacks.pack2 = [{
 	id: 'Ihopethisisunique',
 	unlock: 16,
 	onwin: 3,
+	mini:'hu'
 	level:
 `
 ##########
@@ -650,6 +659,7 @@ levelpacks.pack2 = [{
     id: 'levelben',
 	unlock: 16,
 	onwin: 1,
+	mini:'lb',
     level:
 `
 #########
@@ -665,6 +675,7 @@ levelpacks.pack2 = [{
     id: 'anotherlevelwhichneedsauniqueid',
 	unlock: 16,
 	onwin: 2,
+	mini:'ui',
     level:
 `
 ############
@@ -678,6 +689,7 @@ levelpacks.pack2 = [{
     id:'WensCombinationLock',
 	unlock: 18,
 	onwin: 1,
+	mini:'WC',
     level:
 `
 ##########
@@ -698,6 +710,7 @@ levelpacks.pack3 = [{
 	id: 'veryeasylevel',
 	unlock: 5,
 	onwin: 1,
+	mini:'ve',
 	level:
 `
 #-#######
@@ -710,6 +723,7 @@ levelpacks.pack3 = [{
 	id: "Too Many Cooks I",
 	unlock: 5,
 	onwin: 1,
+	mini:'C1',
 	level:
 `
 #########
@@ -726,6 +740,7 @@ levelpacks.pack3 = [{
 	id: "Too Many Cooks II",
 	unlock: 11,
 	onwin: 3,
+	mini:'C2',
 	level:
 `
 #########
@@ -742,6 +757,7 @@ levelpacks.pack3 = [{
 	id: 'lounge',
 	unlock: 9,
 	onwin: 2,
+	mini:'l1',
 	level:
 `
 #########
@@ -755,6 +771,7 @@ levelpacks.pack3 = [{
 	id: 'lounge2',
 	unlock: 15,
 	onwin: 3,
+	mini:'l2',
 	level:
 `
 #########
@@ -775,6 +792,7 @@ levelpacks.pack4 = [{
 	id: 'box3-',
 	unlock: 20,
 	onwin: 2,
+	mini:'b-',
 	level:
 `
 ####-####
@@ -791,6 +809,7 @@ levelpacks.pack4 = [{
 	id: 'box1',
 	unlock: 22,
 	onwin: 2,
+	mini:'b1',
 	level:
 `
 ########
@@ -806,6 +825,7 @@ levelpacks.pack4 = [{
 	id: 'box2',
 	unlock: 24,
 	onwin: 2,
+	mini:'b2',
 	level:
 `
 #######
@@ -821,6 +841,7 @@ levelpacks.pack4 = [{
 	id: 'testboxer',
 	unlock: 26,
 	onwin: 2,
+	mini:'bt',
 	level:
 `
 #######
@@ -838,6 +859,7 @@ levelpacks.pack5 = [{
 	id: '002_',
 	unlock: 27,
 	onwin: 1,
+	mini:'2_',
 	level:
 `
 ###########
@@ -852,6 +874,7 @@ levelpacks.pack5 = [{
     id: 'levelben_',
 	unlock: 32,
 	onwin: 2,
+	mini:'b_',
     level:
 `
 #########
@@ -866,6 +889,7 @@ levelpacks.pack5 = [{
 	id: 'box3-_',
 	unlock: 35,
 	onwin: 3,
+	mini:'-_',
 	level:
 `
 ###########
@@ -884,6 +908,7 @@ levelpacks.pack5 = [{
 	id: 'testboxer+',
 	unlock: 40,
 	onwin: 2,
+	mini:'t+',
 	level:
 `
 #######
@@ -898,6 +923,7 @@ levelpacks.pack5 = [{
 	id: 'testboxer-',
 	unlock: 42,
 	onwin: 2,
+	mini:'t-',
 	level:
 `
 #######
@@ -912,6 +938,7 @@ levelpacks.pack5 = [{
     id:'BrokenCombinationLock',
 	unlock: 44,
 	onwin: 4,
+	mini:'BC',
     level:
 `
 ##########
@@ -926,6 +953,7 @@ levelpacks.pack5 = [{
     id: 'DedicatedToWensSecondBrotherWhoeverHeIs',
 	unlock: 45,
 	onwin: 6,
+	mini:'2B',
     level:
 `
 #########
@@ -947,6 +975,7 @@ levelpacks.pack6 = [{
 	id: 'blackbox1',
 	unlock: 50,
 	onwin: 2,
+	mini:'x1',
 	level:
 `
 ##-##
@@ -960,6 +989,7 @@ levelpacks.pack6 = [{
 	id: 'blackbox2',
 	unlock: 52,
 	onwin: 2,
+	mini:'x2',
 	level:
 `
 #####
@@ -979,6 +1009,7 @@ levelpacks.pack7=[{
 	id: 'gauntlet',
 	unlock: 60,
 	onwin: 3,
+	mini:'ga',
 	level:
 `
 #############
@@ -994,6 +1025,7 @@ levelpacks.pack7=[{
     id: 'snakes and ladders',
 	unlock: 65,
 	onwin: 2,
+	mini:'sl'
     level:
 `
 ####################
@@ -1007,6 +1039,7 @@ levelpacks.pack7=[{
     id:'01101111 00101111',
 	unlock: 70,
 	onwin: 5,
+	mini:'10',
     level:
 `
 ###########

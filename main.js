@@ -1,5 +1,5 @@
 main = document.getElementById('game');
-levelpacknum = 7;
+levelpacknum = 8;
 playing = false;
 
 document.getElementById("tooltip").style.visibility = "hidden";
@@ -13,7 +13,15 @@ drawMenu = function(){
 	levelpacks.checkunlocks();
 	for (var i = 0; i < levelpacknum; i++) {
 		if (levelpacks['pack'+(i+1)].vis){
-			main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'">'+(i+1)+'</div>';
+			solvedall = true;
+			for (var j = 0; j < levelpacks['pack'+(i+1)].length; j++){
+				if (!levelpacks['pack'+(i+1)][j].completed){solvedall = false}
+				}
+			if (solvedall){
+				main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="goldkey.png" width = "35px" height = "35px" class="goldkey"><div class="levelpacknumb">'+(i+1)+'</div></div>';
+			} else {
+				main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'">'+(i+1)+'</div>';
+			}
 		} else {
 			main.innerHTML += '<div class="choicebutton lock" onmouseenter="hoveringlevelpacklock('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="lock.png" width = "35px" height = "40px" margin="0px"></div>';
 
@@ -483,6 +491,10 @@ setup = function(){
 			levelpacks['pack'+i][j].completed = false;
 			levelpacks['pack'+i][j].vis = false;
 			if (levelpacks['pack'+i][j].onwin === undefined){levelpacks['pack'+i][j].onwin = 1}
+			if (levelpacks['pack'+i][j].unlock === undefined){
+				levelpacks['pack'+i][j].unlock = 0;
+				if (j>=1){levelpacks['pack'+i][j].unlock = levelpacks['pack'+i][parseInt(j)-1].unlock}
+			}
 		}
 	}
 }
@@ -557,6 +569,29 @@ levelpacks.pack1 = [{
 #X#...#.#
 -X..#X..#
 #########
+`
+},{
+    id:'ChristmasTree',
+	unlock: 3,
+	onwin: 3,
+    level:
+`
+......#-#......
+......#.#......
+.....##.##.....
+.....#...#.....
+....###.###....
+....#....X#....
+...###.#.###...
+...#X......#...
+..###.#.#.###..
+..#........X#..
+.###.#.#.#.###.
+.#X..........#.
+###.#.#.#.#.###
+#............X#
+#######@#######
+......###......
 `
 }
 ]
@@ -972,41 +1007,59 @@ levelpacks.pack6 = [{
 #.b.#
 #####
 `
-}]
-levelpacks.pack6.unlock = 50;
-
-levelpacks.pack7=[{
-	id: 'gauntlet',
-	unlock: 60,
+},{
+    id:'Prend garde à toi',
+	unlock: 54,
 	onwin: 3,
-	level:
+    level:
 `
-#############
-#.X.X.X.X.X.####
-#..............#
-#@..........##.#
-#..............#
-#..X.X.X.X.X#-##
-#############
+#########
+#X.X.X.X#
+#...@...#
+#X.XBX.X#
+#.......#
+#XBX.XBX#-#
+#.........#
+#X.X.X.X###
+#########
 `
 },{
-
-    id: 'snakes and ladders',
-	unlock: 65,
+    id:'idek what charles ids are',
+	unlock: 56,
 	onwin: 2,
     level:
 `
-####################
-#...XXX...#.....#..-
-#.....#...#..X..#..#
-#.....#......#..X..#
-#..@..#......#.....#
-####################
+###########
+#......X..#-##
+#..BXB#.B@#.X#
+###..........#
+##############
 `
-},{
+}/*,{
+    id:'well..',
+	unlock: 58,
+	onwin: 2,
+    level:
+`
+.....#####
+######...#
+#.B......###-##
+#..X.#.X.##X.X#
+#......B.@...##
+##.#.X.#B#...#
+.#........####
+.#.X.#.X..#
+.#.b...B..#
+.#...######
+.#####
+`
+}*/]
+levelpacks.pack6.unlock = 50;
+
+levelpacks.pack7=[{
     id:'01101111 00101111',
-	unlock: 70,
-	onwin: 5,
+	unlock: 60,
+	onwin: 4,
     level:
 `
 ###########
@@ -1019,6 +1072,37 @@ levelpacks.pack7=[{
 `
 }]
 levelpacks.pack7.unlock = 60;
+
+
+levelpacks.pack8=[{
+    id: 'snakes and ladders',
+	unlock: 70,
+	onwin: 3,
+    level:
+`
+####################
+#...XXX...#.....#..-
+#.....#...#..X..#..#
+#.....#......#..X..#
+#..@..#......#.....#
+####################
+`
+},{
+	id: 'gauntlet',
+	unlock: 75,
+	onwin: 3,
+	level:
+`
+#############
+#.X.X.X.X.X.####
+#..............#
+#@..........##.#
+#..............#
+#..X.X.X.X.X#-##
+#############
+`
+}]
+levelpacks.pack8.unlock = 70;
 
 levelpacks.setupunlocks();
 setup();

@@ -43,6 +43,11 @@ div {
     left: 20px;
 }
 
+.indented2 {
+    position: relative;
+    left: 40px;
+}
+
 #returntomenu {
     margin-top: 20px;
     width: 90px;

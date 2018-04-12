@@ -11,14 +11,21 @@ drawMenu = function(){
 	document.getElementById("sizedecrease").style.visibility = "hidden";
 	playing = false;
 	levelpacks.checkunlocks();
+	tally = 0;
 	for (var i = 0; i < levelpacknum; i++) {
 		if (levelpacks['pack'+(i+1)].vis){
 			main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'">'+(i+1)+'</div>';
+			for (var j = 0; j < levelpacks['pack'+i].length; j++){
+				if (levelpacks['pack'+i][j].completed){
+					tally = tally + levelpacks['pack'+i][j].onwin
+				}
+			}
 		} else {
 			main.innerHTML += '<div class="choicebutton lock" onmouseenter="hoveringlevelpacklock('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="lock.png" width = "35px" height = "40px" margin="0px"></div>';
 
 		}
 	}
+	points = tally;
 	drawScore();
 }
 

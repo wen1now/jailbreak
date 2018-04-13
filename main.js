@@ -55,7 +55,7 @@ drawlevelpack_real = function(){
 				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton unfinishedlevelbutton" onmouseenter="hoveringlevelpoints('+i+')" onmouseleave="hidetooltip()" id="level'+i+'">'+(i+1)+'</div>';				
 			}
 		} else {
-			main.innerHTML += '<div class="choicebutton lock" onmouseenter="hoveringlevel('+i+')" onmouseleave="hidetooltip()" id="level'+i+'"><img src="lock.png" width = "35px" height = "40px" margin="0px"></div>';
+			main.innerHTML += '<div class="choicebutton lock" onmouseenter="hoveringlevel('+i+')" onmouseleave="hidetooltip()" id="level'+i+'" id="level'+i+'"><img src="lock.png" width = "35px" height = "40px" margin="0px"></div>';
 		}
 	}
 }

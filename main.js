@@ -50,7 +50,7 @@ drawlevelpack_real = function(){
 	for (var i = 0; i < levelpacks['pack'+index].length; i++){
 		if (levelpacks['pack'+index][i].vis||levelpacks['pack'+index][i].completed){
 			if (levelpacks['pack'+index][i].completed){
-				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton levelbutton">'+(i+1)+'</div>';
+				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton levelbutton" onmouseenter="hoveringlevelpointscomplete('+i+')">'+(i+1)+'</div>';
 			} else {
 				main.innerHTML += '<div onclick="drawlevel_('+i+')" class="choicebutton unfinishedlevelbutton" onmouseenter="hoveringlevelpoints('+i+')" onmouseleave="hidetooltip()" id="level'+i+'">'+(i+1)+'</div>';				
 			}
@@ -403,7 +403,11 @@ hoveringlevel = function(index){
 	var s = a.getBoundingClientRect();
 	t.style.top = s.top+'px';
 	t.style.left = s.left + 70+'px';
-	t.innerHTML = "Unlock at "+levelpacks['pack'+pack_index][index].unlock+" key(s)";
+	if(levelpacks['pack'+pack_index][index].unlock==1){
+		t.innerHTML = "Unlock at 1 key";
+	} else {
+		t.innerHTML = "Unlock at "+levelpacks['pack'+pack_index][index].unlock+" keys";
+	}
 	t.style.visibility = "visible";
 }
 
@@ -413,7 +417,25 @@ hoveringlevelpoints = function(index){
 	var s = a.getBoundingClientRect();
 	t.style.top = s.top+'px';
 	t.style.left = s.left + 70+'px';
-	t.innerHTML = "Complete for "+levelpacks['pack'+pack_index][index].onwin+" key(s)";
+	if(levelpacks['pack'+pack_index][index].onwin==1){
+		t.innerHTML = "Complete for 1 key";
+	} else {
+		t.innerHTML = "Complete for "+levelpacks['pack'+pack_index][index].onwin+" keys";
+	}
+	t.style.visibility = "visible";	
+}
+
+hoveringlevelpointscomplete = function(index){
+	var a = document.getElementById('level'+index);
+	var t = document.getElementById('tooltip');
+	var s = a.getBoundingClientRect();
+	t.style.top = s.top+'px';
+	t.style.left = s.left + 70+'px';
+	if(levelpacks['pack'+pack_index][index].onwin==1){
+		t.innerHTML = "Completed for 1 key";
+	} else {
+		t.innerHTML = "Completed for "+levelpacks['pack'+pack_index][index].onwin+" keys";
+	}
 	t.style.visibility = "visible";	
 }
 

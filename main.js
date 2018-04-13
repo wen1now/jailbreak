@@ -432,9 +432,9 @@ hoveringlevelpointscomplete = function(index){
 	t.style.top = s.top+'px';
 	t.style.left = s.left + 70+'px';
 	if(levelpacks['pack'+pack_index][index].onwin==1){
-		t.innerHTML = "Already completed for 1 key";
+		t.innerHTML = "Completed for 1 key";
 	} else {
-		t.innerHTML = "Already completed for "+levelpacks['pack'+pack_index][index].onwin+" keys";
+		t.innerHTML = "Completed for "+levelpacks['pack'+pack_index][index].onwin+" keys";
 	}
 	t.style.visibility = "visible";	
 }

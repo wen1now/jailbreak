@@ -29,8 +29,8 @@ drawMenu = function(){
 
 		}
 	}
-	drawScore();
 	points = tally;
+	drawScore();
 }
 
 drawScore = function(){

@@ -11,11 +11,12 @@ drawMenu = function(){
 	document.getElementById("sizedecrease").style.visibility = "hidden";
 	playing = false;
 	levelpacks.checkunlocks();
+	points = 0;
 	for (var i = 0; i < levelpacknum; i++) {
 		if (levelpacks['pack'+(i+1)].vis){
 			solvedall = true;
 			for (var j = 0; j < levelpacks['pack'+(i+1)].length; j++){
-				if (!levelpacks['pack'+(i+1)][j].completed){solvedall = false}
+				if (!levelpacks['pack'+(i+1)][j].completed){solvedall = false} else {points += levelpacks['pack'+(i+1)][j].onwin}
 				}
 			if (solvedall){
 				main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="goldkey.png" width = "35px" height = "35px" class="goldkey"><div class="levelpacknumb">'+(i+1)+'</div></div>';
@@ -982,7 +983,7 @@ levelpacks.pack5 = [{
 },{
     id:'BrokenCombinationLock',
 	unlock: 44,
-	onwin: 4,
+	onwin: 6,
     level:
 `
 ##########
@@ -1122,6 +1123,53 @@ levelpacks.pack8=[{
 #.....#......#..X..#
 #..@..#......#.....#
 ####################
+`
+},{
+    id: 'give up',
+    mini: 'gu',
+	unlock: 75,
+    onwin: 5,
+    level: 
+`
+##############
+#............#
+#...X.X.X.X.X#
+#...@........#
+#...X.X.X.X.X-
+#............#
+#...X.X.X.X.X#
+#............#
+##############
+`
+},{
+    id: 'surrounded',
+    mini: 'sr',
+	unlock: 80,
+    onwin: 6,
+    level: 
+`
+#############
+#.....XX....#
+#......XX...-
+#@......XX..#
+#........XX.#
+#.........XX#
+#############
+`
+},{
+    id: 'faultline',
+    mini: 'fl',
+	unlock: 85,
+    onwin: 5,
+    level:
+`
+#############
+#......X....#
+#.....X.XXX.#
+#@..........-
+#......X....#
+#.....X.XXX.#
+#############
 `
 }]
 levelpacks.pack8.unlock = 70;

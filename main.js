@@ -1,5 +1,4 @@
 main = document.getElementById('game');
-levelpacknum = 8;
 playing = false;
 
 document.getElementById("tooltip").style.visibility = "hidden";
@@ -11,23 +10,31 @@ drawMenu = function(){
 	document.getElementById("sizedecrease").style.visibility = "hidden";
 	playing = false;
 	levelpacks.checkunlocks();
-	points = 0;
+	var temp_points = 0;
+	var x = null;
 	for (var i = 0; i < levelpacknum; i++) {
-		if (levelpacks['pack'+(i+1)].vis){
-			solvedall = true;
-			for (var j = 0; j < levelpacks['pack'+(i+1)].length; j++){
-				if (!levelpacks['pack'+(i+1)][j].completed){solvedall = false} else {points += levelpacks['pack'+(i+1)][j].onwin}
+		if (i%10 == 0){
+			main.innerHTML += "<div class='newrow' id='row"+i+"'></div>";
+			x = document.getElementById("row"+i);
+			if (points<lineunlock[i/10]){x = null}
+		}
+		if (x!=null){
+			if (levelpacks['pack'+(i+1)].vis){
+				solvedall = true;
+				for (var j = 0; j < levelpacks['pack'+(i+1)].length; j++){
+					if (!levelpacks['pack'+(i+1)][j].completed){solvedall = false} else {temp_points += levelpacks['pack'+(i+1)][j].onwin}
+					}
+				if (solvedall){
+					x.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="goldkey.png" width = "35px" height = "35px" class="goldkey"><div class="levelpacknumb">'+(i+1)+'</div></div>';
+				} else {
+					x.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'">'+(i+1)+'</div>';
 				}
-			if (solvedall){
-				main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="goldkey.png" width = "35px" height = "35px" class="goldkey"><div class="levelpacknumb">'+(i+1)+'</div></div>';
 			} else {
-				main.innerHTML += '<div onclick="drawlevelpack('+(i+1)+')" class="choicebutton levelpackbutton" onmouseenter="hoveringlevelpack('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'">'+(i+1)+'</div>';
+				x.innerHTML += '<div class="choicebutton lock" onmouseenter="hoveringlevelpacklock('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="lock.png" width = "35px" height = "40px" margin="0px"></div>';
 			}
-		} else {
-			main.innerHTML += '<div class="choicebutton lock" onmouseenter="hoveringlevelpacklock('+i+')" onmouseleave="hidetooltip()" id="levelpack'+i+'"><img src="lock.png" width = "35px" height = "40px" margin="0px"></div>';
-
 		}
 	}
+	points = temp_points;
 	drawScore();
 }
 
@@ -552,6 +559,8 @@ levelpacks.setupunlocks = function(){
 	}
 }
 
+lineunlock = [0];
+
 levelpacks.pack1 = [{
 	id: '000',
 	unlock: 0,
@@ -830,8 +839,23 @@ levelpacks.pack3.unlock = 5;
 //next world at 20 things
 
 levelpacks.pack4 = [{
-	id: 'box3-',
+	id: 'box1',
 	unlock: 20,
+	onwin: 2,
+	level:
+`
+########
+#X....X-
+###.@###
+#....bX#
+#.#..#.#
+#......#
+####...#
+########
+`
+},{
+	id: 'box3-',
+	unlock: 22,
 	onwin: 2,
 	level:
 `
@@ -846,24 +870,9 @@ levelpacks.pack4 = [{
 #########
 `
 },{
-	id: 'box1',
-	unlock: 22,
-	onwin: 2,
-	level:
-`
-########
-#X....X-
-###.@###
-#....bX#
-#.#..#.#
-#......#
-####...#
-########
-`
-},{
 	id: 'box2',
 	unlock: 24,
-	onwin: 2,
+	onwin: 3,
 	level:
 `
 #######
@@ -1034,15 +1043,12 @@ levelpacks.pack6 = [{
 	onwin: 2,
 	level:
 `
-#####
-#.X.-
-#.#.#
-#.@.#
-#.B.#
-#.X.#
-#.B.#
-#.b.#
-#####
+#########
+#.......#
+#bBXB@#X#
+#.......#
+#######-#
+
 `
 },{
     id:'Prend garde à toi',
@@ -1134,8 +1140,8 @@ levelpacks.pack8=[{
 ##############
 #............#
 #...X.X.X.X.X#
-#...@........#
-#...X.X.X.X.X-
+#............#
+#.@.X.X.X.X.X-
 #............#
 #...X.X.X.X.X#
 #............#
@@ -1166,13 +1172,156 @@ levelpacks.pack8=[{
 #############
 #......X....#
 #.....X.XXX.#
-#@..........-
+#.@.........-
 #......X....#
 #.....X.XXX.#
 #############
 `
 }]
 levelpacks.pack8.unlock = 70;
+
+levelpacks.pack9=[{
+    id: 'nottoohardthisone',
+	unlock: 80,
+    onwin: 2,
+    level:
+`
+#######
+#..X.X#
+#@B...#-#
+#......X#
+#########
+`
+},{
+    id: 'itgetsharder and harder...',
+	unlock: 82,
+    onwin: 3,
+    level:
+`
+#######
+#..X.X#
+#@B.#.#-#
+#......X#
+#########
+`
+},{
+    id: "'blocking' the doorway",
+	unlock: 90,
+    onwin: 2,
+    level:
+`
+#########
+#.....XX#
+#.....#.-
+#@B#..#X#
+#.......#
+#########
+`
+},{
+    id: 'some level(again)',
+	unlock: 95,
+    onwin: 4,
+    level:
+`
+##########
+#....#...#
+#..X.....-
+#@BBB##X##
+#..X.#
+#....#
+######
+`
+}]
+levelpacks.pack8.unlock = 80;
+
+//some easy levels as a 'cool-down'
+levelpacks.pack10=[{
+    id: 'idk if this has already been made',
+	unlock: 90,
+    onwin: 1,
+    level:
+`
+#######
+#.....#
+#.....#
+#@....####
+#.....XXX-
+##########
+`
+},{
+	id: 'um i guess',
+	unlock: 90,
+	onwin: 1,
+	level:
+`
+#######
+#....X#
+#.b@..#
+#...XX#
+####-##
+`
+},{
+	id: 'um i guess 2',
+	unlock: 91,
+	onwin: 1,
+	level:
+`
+#######
+#....X#
+#.B@..#
+#...XX#
+####-##
+`
+}]
+levelpacks.pack10.unlock = 90;
+
+lineunlock.push(95);
+
+/*
+levelpacks.pack11=[{
+    id: 'idk if this has already been made',
+	unlock: 90,
+    onwin: 1,
+    level:
+`
+#######
+#.....#
+#.....#
+#@....####
+#.....XXX-
+##########
+`
+},{
+	id: 'um i guess',
+	unlock: 90,
+	onwin: 1,
+	level:
+`
+#######
+#....X#
+#.b@..#
+#...XX#
+####-##
+`
+},{
+	id: 'um i guess 2',
+	unlock: 91,
+	onwin: 1,
+	level:
+`
+#######
+#....X#
+#.B@..#
+#...XX#
+####-##
+`
+}]
+levelpacks.pack11.unlock = 100;
+*/
+
+levelpacknum = 11;
+
+
 
 levelpacks.setupunlocks();
 setup();

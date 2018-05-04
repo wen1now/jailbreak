@@ -1206,7 +1206,7 @@ levelpacks.pack9=[{
 `
 },{
     id: "'blocking' the doorway",
-	unlock: 90,
+	unlock: 85,
     onwin: 2,
     level:
 `
@@ -1219,7 +1219,7 @@ levelpacks.pack9=[{
 `
 },{
     id: 'some level(again)',
-	unlock: 95,
+	unlock: 87,
     onwin: 4,
     level:
 `
@@ -1241,12 +1241,12 @@ levelpacks.pack10=[{
     onwin: 1,
     level:
 `
-#######
-#.....#
-#.....#
-#@....####
-#.....XXX-
 ##########
+#.....XXX-
+#.....####
+#@....#
+#.....#
+#######
 `
 },{
 	id: 'um i guess',
@@ -1262,7 +1262,7 @@ levelpacks.pack10=[{
 `
 },{
 	id: 'um i guess 2',
-	unlock: 91,
+	unlock: 93,
 	onwin: 1,
 	level:
 `
@@ -1275,9 +1275,9 @@ levelpacks.pack10=[{
 }]
 levelpacks.pack10.unlock = 90;
 
-lineunlock.push(95);
 
 /*
+lineunlock.push(95);
 levelpacks.pack11=[{
     id: 'idk if this has already been made',
 	unlock: 90,

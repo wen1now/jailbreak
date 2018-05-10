@@ -1249,19 +1249,6 @@ levelpacks.pack8.unlock = 80;
 
 //some easy levels as a 'cool-down'
 levelpacks.pack10=[{
-    id: 'idk if this has already been made',
-	unlock: 90,
-    onwin: 1,
-    level:
-`
-##########
-#.....XXX-
-#.....####
-#@....#
-#.....#
-#######
-`
-},{
 	id: 'um i guess',
 	unlock: 90,
 	onwin: 1,
@@ -1275,7 +1262,7 @@ levelpacks.pack10=[{
 `
 },{
 	id: 'um i guess 2',
-	unlock: 93,
+	unlock: 92,
 	onwin: 1,
 	level:
 `
@@ -1289,7 +1276,7 @@ levelpacks.pack10=[{
 levelpacks.pack10.unlock = 90;
 
 
-
+/*
 lineunlock.push(7);
 levelpacks.pack11=[{
     id: 'idk if this has already been made',
@@ -1330,9 +1317,9 @@ levelpacks.pack11=[{
 `
 }]
 levelpacks.pack11.unlock = 100;
+*/
 
-
-levelpacknum = 11;
+levelpacknum = 10;
 
 levelpacks.setupunlocks();
 setup();

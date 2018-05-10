@@ -119,6 +119,22 @@ p {
     position: relative;
 }
 
+.newlineunlock {
+    user-select: none;
+    border: 2px black solid;
+    font-size: 20px;
+    line-height: 50px;
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    vertical-align: top;
+    margin: 5px;
+    display: inline-block;
+    border-radius: 5px;
+    position: relative;
+    background-color: #ba3;
+}
+
 #tooltip {
     position: fixed;
     z-index: 5;

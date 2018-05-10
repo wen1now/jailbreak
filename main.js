@@ -17,7 +17,7 @@ drawMenu = function(){
 	for (var i = 0; i < levelpacknum; i++) {
 		var all_solved = true;
 		for (var j = 0; j < levelpacks['pack'+(i+1)].length; j++){
-			if (!levelpacks['pack'+(i+1)][j].completed){all_solved = false;console.log(i,j)}
+			if (!levelpacks['pack'+(i+1)][j].completed){all_solved = false}
 		}
 		if (all_solved){golden_keys+=1}
 	}
@@ -28,7 +28,7 @@ drawMenu = function(){
 			x = document.getElementById("row"+i);
 			if (golden_keys<lineunlock[i/10]){
 				x = null;
-				if (i+1<=levelpacknum){document.getElementById('row'+i).innerHTML += "<div class='newlineunlock'>Unlock at "+lineunlock[i/10]+" golden keys</div>"}
+				if (i<levelpacknum && points>levelpack['pack'+i].unlock){document.getElementById('row'+i).innerHTML += "<div class='newlineunlock'>Unlock at "+lineunlock[i/10]+" golden keys</div>"}
 			}
 		}
 		if (x!=null){
@@ -573,6 +573,9 @@ levelpacks.setupunlocks = function(){
 }
 
 lineunlock = [0];
+
+levelpacks.pack0 = new Object();
+levelpacks.pack0.unlock = 0;
 
 levelpacks.pack1 = [{
 	id: '000',
@@ -1245,7 +1248,7 @@ levelpacks.pack9=[{
 ######
 `
 }]
-levelpacks.pack8.unlock = 80;
+levelpacks.pack9.unlock = 80;
 
 //some easy levels as a 'cool-down'
 levelpacks.pack10=[{

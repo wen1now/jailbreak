@@ -3,6 +3,7 @@ playing = false;
 
 document.getElementById("tooltip").style.visibility = "hidden";
 
+golden_keys = 0;
 drawMenu = function(){
 	main.innerHTML = '';
 	document.getElementById("information").innerHTML = "";
@@ -12,11 +13,20 @@ drawMenu = function(){
 	levelpacks.checkunlocks();
 	var temp_points = 0;
 	var x = null;
+	golden_keys = 0;
+	for (var i = 0; i < levelpacknum; i++) {
+		var all_solved = true;
+		for (var j = 0; j < levelpacks['pack'+(i+1)].length; j++){
+			if (!levelpacks['pack'+(i+1)][j].solved){all_solved = false}
+		}
+		if (all_solved){golden_keys+=1}
+	}
+
 	for (var i = 0; i < levelpacknum; i++) {
 		if (i%10 == 0){
 			main.innerHTML += "<div class='newrow' id='row"+i+"'></div>";
 			x = document.getElementById("row"+i);
-			if (points<lineunlock[i/10]){x = null}
+			if (golden_keys<lineunlock[i/10]){x = null}
 		}
 		if (x!=null){
 			if (levelpacks['pack'+(i+1)].vis){
@@ -1277,7 +1287,7 @@ levelpacks.pack10.unlock = 90;
 
 
 /*
-lineunlock.push(95);
+lineunlock.push(7);
 levelpacks.pack11=[{
     id: 'idk if this has already been made',
 	unlock: 90,
@@ -1319,7 +1329,7 @@ levelpacks.pack11=[{
 levelpacks.pack11.unlock = 100;
 */
 
-levelpacknum = 11;
+levelpacknum = 10;
 
 
 

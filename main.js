@@ -28,7 +28,7 @@ drawMenu = function(){
 			x = document.getElementById("row"+i);
 			if (golden_keys<lineunlock[i/10]){
 				x = null;
-				if (i<levelpacknum && points>levelpack['pack'+i].unlock){document.getElementById('row'+i).innerHTML += "<div class='newlineunlock'>Unlock at "+lineunlock[i/10]+" golden keys</div>"}
+				if (i<levelpacknum && points>levelpacks['pack'+i].unlock){document.getElementById('row'+i).innerHTML += "<div class='newlineunlock'>Unlock at "+lineunlock[i/10]+" golden keys</div>"}
 			}
 		}
 		if (x!=null){

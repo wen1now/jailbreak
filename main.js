@@ -157,8 +157,13 @@ loadlevel = function(string){
 			leveltemplate[i].push(0);
 			t=x[i_][j_];
 			if (t=='X'){
-				var entity = new Entity(i,j,'#000',false,'enemy',true);
+				var entity = new Entity(i,j,'#222',false,'enemy',true);
 				entity.chase = 'black';
+				level[i][j].push(entity);
+				enemylist.push(entity);
+			} else if (t=='R'){
+				var entity = new Entity(i,j,'#222',false,'enemy',true);
+				entity.chase = 'indianred';
 				level[i][j].push(entity);
 				enemylist.push(entity);
 			} else if (t=='#'){
@@ -178,7 +183,7 @@ loadlevel = function(string){
 				player = new Entity(i,j,'black',false,'player',true);
 				level[i][j].push(player);
 			} else if (t=='b'){
-				var entity= new Entity(i,j,'#a65',true,'box',true);
+				var entity= new Entity(i,j,'indianred',true,'box',true);
 				level[i][j].push(entity);
 				boxlist.push(entity);
 			} else if (t=='B'){
@@ -227,10 +232,19 @@ drawlevel = function( /*size is the size each square*/){
 	for (var i in enemylist){
 		e = enemylist[i];
 		c.strokeStyle = e.color;
+		c.beginPath();
 		c.moveTo((e.y+0.1)*size,(e.x+0.1)*size);
 		c.lineTo((e.y+0.9)*size,(e.x+0.9)*size);
 		c.moveTo((e.y+0.9)*size,(e.x+0.1)*size);
 		c.lineTo((e.y+0.1)*size,(e.x+0.9)*size);
+		c.stroke();
+		c.strokeStyle = e.chase;
+		c.beginPath();
+		c.moveTo((e.y+0.4)*size,(e.x+0.4)*size);
+		c.lineTo((e.y+0.6)*size,(e.x+0.6)*size);
+		c.moveTo((e.y+0.4)*size,(e.x+0.6)*size);
+		c.lineTo((e.y+0.6)*size,(e.x+0.4)*size);
+		c.stroke();
 	}
 	c.stroke();
 	for (var i in walllist){
@@ -262,13 +276,17 @@ stringlevel = function(){
 		for (var j in level[i]){
 			space=true;
 			for (var k in level[i][j]){
-				if (level[i][j][k].type == 'enemy'){string+='X';space=false}
+				if (level[i][j][k].type == 'enemy'){
+					space=false;
+					if (level[i][j][k].chase == 'black'){string+='X'}
+					if (level[i][j][k].chase == 'indianred'){string+='R'}
+				}
 				if (level[i][j][k].type == 'player'){string+='@';space=false}
 				if (level[i][j][k].color == '#666'){string+='#';space=false}
 				if (level[i][j][k].type == 'finish'){string+='-';space=false}
 				if (level[i][j][k].type == 'box'){
 					if (level[i][j][k].color == 'black'){string+='B';space=false}
-					if (level[i][j][k].color == '#a65'){string+='b';space=false}
+					if (level[i][j][k].color == 'indianred'){string+='b';space=false}
 				}
 			}
 			if (space){string+='.'}
@@ -928,6 +946,21 @@ levelpacks.pack4 = [{
 #..X.X.X.X.X#
 #############
 `
+},{
+    id: 'another box level',
+    unlock: 31,
+    onwin: 2,
+    level:
+`
+#######
+#....X#
+#....X#
+#@b..X#
+#....X-
+#....X#
+####XX#
+...####
+`
 }]
 levelpacks.pack4.unlock = 20;
 
@@ -1034,6 +1067,21 @@ levelpacks.pack5 = [{
 #.#.#.#.#
 #@......#
 #########
+`
+},{
+    id: 'another box level 2',
+    unlock: 48,
+    onwin: 3,
+    level:
+`
+#######
+#....X#
+#....X#-##
+#@b..X#.X#
+#....X...#
+#....X#..#
+####XX####
+...####
 `
 }]
 levelpacks.pack5.unlock = 27;
@@ -1164,7 +1212,7 @@ levelpacks.pack8=[{
 ##############
 `
 },{
-    id: 'surrounded',
+    id: 'diagonal line',
     mini: 'sr',
 	unlock: 80,
     onwin: 6,
@@ -1252,77 +1300,73 @@ levelpacks.pack9.unlock = 80;
 
 //some easy levels as a 'cool-down'
 levelpacks.pack10=[{
-	id: 'um i guess',
-	unlock: 90,
-	onwin: 1,
-	level:
+    id: 'pack10level1',
+    onwin: 1,
+    level:
 `
-#######
-#....X#
-#.b@..#
-#...XX#
-####-##
-`
+########
+#.....X#
+#.b@..X#
+#.....X#
+#####-##
+`	
 },{
-	id: 'um i guess 2',
-	unlock: 92,
-	onwin: 1,
-	level:
+    id: 'pack10level2',
+    unlock: 92,
+    onwin: 1,
+    level:
 `
-#######
-#....X#
-#.B@..#
-#...XX#
-####-##
+########
+#.....X#
+#.B@..X#
+#.....X-
+########
+`	
+},{
+    id: 'pack10level3Ihopethisisbigenough',
+    unlock: 94,
+    onwin: 3,
+    level:
 `
+#############
+#...XXXXX...#
+#...........#
+#...........#
+#X.........X#
+#X.........X#
+#X....@....X#
+#X.........X#
+#X.........X#
+#...........#
+#...........#
+#...XXXXX...-
+#############
+`	
 }]
 levelpacks.pack10.unlock = 90;
 
 
-/*
+//btw for anybody reading this, levels11+ give much more keys than previous levels
 lineunlock.push(7);
 levelpacks.pack11=[{
-    id: 'idk if this has already been made',
-	unlock: 90,
-    onwin: 1,
+    id: 'redenemies',
+    onwin: 4,
     level:
 `
-#######
-#.....#
-#.....#
-#@....####
-#.....XXX-
-##########
-`
-},{
-	id: 'um i guess',
-	unlock: 90,
-	onwin: 1,
-	level:
-`
-#######
-#....X#
-#.b@..#
-#...XX#
-####-##
-`
-},{
-	id: 'um i guess 2',
-	unlock: 91,
-	onwin: 1,
-	level:
-`
-#######
-#....X#
-#.B@..#
-#...XX#
-####-##
+####-####
+####R####
+#...R...#
+#@b.....#
+#...X...#
+#...X...#
+#...X...#
+#..######
+####
 `
 }]
 levelpacks.pack11.unlock = 100;
-*/
 
-levelpacknum = 10;
+levelpacknum = 11;
 
 levelpacks.setupunlocks();
 setup();

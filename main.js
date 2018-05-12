@@ -958,8 +958,7 @@ levelpacks.pack4 = [{
 #@b..X#
 #....X-
 #....X#
-####XX#
-...####
+#######
 `
 }]
 levelpacks.pack4.unlock = 20;

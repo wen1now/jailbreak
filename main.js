@@ -1349,7 +1349,7 @@ levelpacks.pack10.unlock = 90;
 lineunlock.push(7);
 levelpacks.pack11=[{
     id: 'redenemies',
-    onwin: 4,
+    onwin: 8,
     level:
 `
 ####-####

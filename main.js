@@ -1318,8 +1318,8 @@ levelpacks.pack10=[{
 ########
 #.....X#
 #.B@..X#
-#.....X-
-########
+#.....X#
+######-#
 `	
 },{
     id: 'pack10level3Ihopethisisbigenough',

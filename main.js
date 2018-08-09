@@ -1,7 +1,10 @@
-main = document.getElementById('game');
+﻿main = document.getElementById('game');
 playing = false;
 
 document.getElementById("tooltip").style.visibility = "hidden";
+saveLocation = "jailbreak_save"
+//default is jailbreak_save
+//other options: ukteam,tempsave
 
 golden_keys = 0;
 drawMenu = function(){
@@ -519,22 +522,22 @@ save = function(){
 			if (levelpacks['pack'+i][j].completed){levels.push(levelpacks['pack'+i][j].id)}
 		}
 	}
-    localStorage.setItem("jailbreak_save", JSON.stringify(levels));
+    localStorage.setItem(saveLocation, JSON.stringify(levels));
     var levelpack = 1;
 	for (var i = levelpacknum; i > 0; i--) {
 		if (levelpacks['pack'+i].vis){levelpack = i; i = 0}
 	}
-    localStorage.setItem("jailbreak_story", JSON.stringify(levelpack));
+    localStorage.setItem(saveLocation+"_story", JSON.stringify(levelpack));
 }
 
 delsave = function(){
-    localStorage.removeItem("jailbreak_save");
+    localStorage.removeItem(saveLocation);
 }
 
 load = function(){
 	//load the game too, that seems necessary
-    if (localStorage.getItem("jailbreak_save")){
-        var levels = JSON.parse(localStorage.getItem("jailbreak_save"));
+    if (localStorage.getItem(saveLocation)){
+        var levels = JSON.parse(localStorage.getItem(saveLocation));
 		for (var i = 1; i <= levelpacknum; i++) {
 			for (var j = 0; j < levelpacks['pack'+i].length; j++){
 				if (levels.includes(levelpacks['pack'+i][j].id)){
@@ -1308,7 +1311,7 @@ levelpacks.pack10=[{
 #.b@..X#
 #.....X#
 #####-##
-`	
+`
 },{
     id: 'pack10level2',
     unlock: 92,
@@ -1346,10 +1349,24 @@ levelpacks.pack10.unlock = 90;
 
 
 //btw for anybody reading this, levels11+ give much more keys than previous levels
-lineunlock.push(7);
+lineunlock.push(6);
 levelpacks.pack11=[{
-    id: 'redenemies',
-    onwin: 8,
+    id: 'redenemies1',
+    onwin: 6,
+    level:
+`
+#########
+#...XR..#
+#...RX#-#
+#..b..#
+#.@...#
+#.....#
+#######
+`
+},{
+    id: 'redenemies2',
+    onwin: 9,
+    unlock: 105,
     level:
 `
 ####-####
@@ -1361,6 +1378,22 @@ levelpacks.pack11=[{
 #...X...#
 #..######
 ####
+`
+},{
+    id: 'idk if this is too easy',
+    unlock: 110,
+    onwin: 8,
+    level:
+`
+#########
+#.......#
+#.#.#.#.###
+#.......RR#
+#.#b#.#.#-#
+#...@...#
+#.#.#.#.#
+#X.....X#
+#########
 `
 }]
 levelpacks.pack11.unlock = 100;
